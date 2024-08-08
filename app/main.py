@@ -102,18 +102,19 @@ def main():
             "Upload an image of a plant", type=["jpg", "jpeg", "png"])
 
     with col4:
+        camera_image = None
         if st.button("Or Take a Picture"):
             st.session_state.camera_active = True
 
-            if st.session_state.camera_active:
-                camera_image = st.camera_input('Camera',label_visibility='hidden')
-                if camera_image is not None:
-                    image = Image.open(camera_image)
-                    st.session_state.camera_active = False
+        if st.session_state.camera_active:
+            camera_image = st.camera_input('Camera',label_visibility='hidden')
+               
 
-            if uploaded_file is not None:
-                image = Image.open(uploaded_file)
-
+    if uploaded_file is not None:
+        image = Image.open(uploaded_file)
+    elif camera_image is not None:
+        image = Image.open(camera_image)
+    
     col1, col2 = st.columns([1, 1])
     with col1:
         if image is not None:
